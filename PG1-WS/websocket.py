@@ -39,6 +39,20 @@ async def echo(websocket):
     async for message in websocket:
         await websocket.send(message)
 
+async def chat(websocket, sessions={}):
+    """Chat WebSocket handler"""
+    remote = websocket.remote_address
+    sessions[remote] = websocket
+
+    try:
+        async for message in websocket:
+            for socket in sessions.values():
+                if (socket != websocket):
+                    await socket.send(message)
+    finally:
+        del sessions[remote]
+        
+
 
 async def web_socket_router(websocket, path):
     """Route WebSocket requests to their handlers"""
@@ -46,6 +60,8 @@ async def web_socket_router(websocket, path):
         await websocket.close(reason=f'needs a path')
     elif path == '/echo':
         await echo(websocket)
+    elif path == '/chat':
+        await chat(websocket)
     else:
         await websocket.close(reason=f'path not found: {path}')
 
