@@ -55,3 +55,54 @@ def test_sum(calculator_client):
 
     # then
     assert result.s == expected
+
+def test_mul(calculator_client):
+    from calculator_pb2 import MultiplyRequest
+
+    # given
+    a = 256.5
+    b = 128.8
+
+    expected = a * b
+
+    # when
+    result = calculator_client.Mul(MultiplyRequest(a=a, b=b))
+
+    # then
+    assert result.m == expected
+
+
+def test_big_three(calculator_client):
+    from calculator_pb2 import BigThreeRequest
+
+    # given
+    a = 256.5
+    b = 128.8
+    c = 512.3
+
+    expected = max(a, b, c)
+
+    # when
+    result = calculator_client.BigThree(BigThreeRequest(a=a, b=b, c=c))
+
+    # then
+    assert result.b == expected
+
+def test_div(calculator_client):
+    from calculator_pb2 import DivRequest
+
+    # given
+    a = 256.5
+    b = 128.8
+
+    expected_q = a // b
+    expected_r = a % b
+
+    # when
+    result = calculator_client.Div(DivRequest(a=a, b=b))
+
+    # then
+    assert result.q == expected_q
+    assert result.r == expected_r
+
+

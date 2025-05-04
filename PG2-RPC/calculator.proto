@@ -9,6 +9,43 @@ message SumReply {
   double s = 1;
 }
 
+message MultiplyRequest {
+  double a = 1;
+  double b = 2;
+}
+
+message MultiplyReply {
+  double m = 1;
+}
+
+message BigThreeRequest {
+  double a = 1;
+  double b = 2;
+  double c = 3;
+}
+
+message BigThreeReply {
+  double b = 1;
+}
+
+message DivRequest {
+  double a = 1;
+  double b = 2;
+}
+
+message DivReply {
+  double q = 1;
+  double r = 2;
+}
+
+
 service Calculator {
   rpc Sum (SumRequest) returns (SumReply);
+  rpc Mul (MultiplyRequest) returns (MultiplyReply);
+  rpc BigThree (BigThreeRequest) returns (BigThreeReply);
+  rpc Div (DivRequest) returns (DivReply);
 }
+
+
+
+
