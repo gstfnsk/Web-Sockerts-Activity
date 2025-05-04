@@ -51,7 +51,7 @@ async def web_socket_router(websocket, path):
 
 
 async def main():
-    async with serve(web_socket_router, "localhost", 8080, process_request=http_handler):
+    async with websockets.server.serve(web_socket_router, "localhost", 8080, process_request=http_handler):
         await Future()
 
 
