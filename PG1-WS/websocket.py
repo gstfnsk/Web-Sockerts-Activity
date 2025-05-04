@@ -1,5 +1,6 @@
 import asyncio
 import websockets
+import emoji
 
 from asyncio import run
 from asyncio import Future
@@ -45,11 +46,19 @@ async def chat(websocket, sessions={}):
     sessions[remote] = websocket
 
     try:
+        for socket in sessions.values():
+            if (socket != websocket):
+                    await socket.send(emoji.emojize(f"Usuário de IP:Porta ({remote[0]}:{remote[1]}) entrou no chat :smiley:", language='alias'))
+
         async for message in websocket:
             for socket in sessions.values():
                 if (socket != websocket):
-                    await socket.send(message)
+                    await socket.send(emoji.emojize(message, language='alias'))
     finally:
+        for socket in sessions.values():
+            if (socket != websocket):
+                    await socket.send(emoji.emojize(f"Usuário de IP:Porta ({remote[0]}:{remote[1]}) saiu do chat :sob:", language='alias'))
+
         del sessions[remote]
         
 
