@@ -1,2 +1,2 @@
-# Web-Sockerts-Activity
+# Web-Sockets-Activity
 SISTEMAS OPERACIONAIS II - INF01151
